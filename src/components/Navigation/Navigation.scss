@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+
+.main-navigation {
+    font-size: 1.1rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    .mobile-navigation {
+        display: inline;
+    }
+    ul {
+        display: none;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        li {
+            display: inline-block;
+            .nav-decorator {
+                font-size: 0.9rem;
+                margin-left: 0.6rem;
+                margin-right: 0.6rem;
+                color: $colorPrimaryDark;
+            }
+        }
+    }
+    a {
+        font-size: 1.1rem;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .main-navigation {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .main-navigation {
+        font-size: 1.4rem;
+        .mobile-navigation {
+            display: none;
+        }
+        ul {
+            display: block;
+        }
+    }
+
+}

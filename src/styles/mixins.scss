@@ -1,0 +1,47 @@
+@import './variables.scss';
+
+@mixin selection($color, $background) {
+
+    ::-moz-selection {
+        color: $color;
+        background: $background;
+    }
+    
+    ::selection {
+        color: $color;
+        background: $background;
+    }
+
+}
+
+@mixin parallax-background($backgroundImage) {
+
+    background-image: url($backgroundImage);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+
+}
+
+@mixin placeholder($color) {
+    &::placeholder {
+        color: rgba($color, 0.7);
+        opacity: 1;
+    }
+    
+    &:-ms-input-placeholder {
+        color: rgba($color, 0.7);
+    }
+    
+    &::-ms-input-placeholder {
+        color: rgba($color, 0.7);
+    }
+}
+
+@mixin linedItem {
+    border-top: 1px solid rgba($colorPrimary, 0.2);
+}

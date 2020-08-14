@@ -1,0 +1,166 @@
+@import './styles/variables.scss';
+@import './styles/fonts.scss';
+@import './styles/mixins.scss';
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: $colorSecondaryDark;
+    font-size: 16px;
+    color: $colorPrimary;
+    @include selection($colorPrimary, $colorSelection);
+}
+
+.parallax-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    @include parallax-background($backgroundImage);
+    background-attachment: scroll;
+}
+
+.content-container {
+    max-width: calc(800px + 3rem);
+    position: relative;
+    z-index: 2;
+    .content {
+        background-color: rgba($colorSecondary, 0.75);
+        min-height: calc(100vh - 2rem);
+        margin: 1rem 0;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        width: 800px;
+        max-width: 100%;
+        box-shadow: 2px 4px 5px 2px $colorSecondaryDark;
+        > div {
+            min-height: calc(100vh - 5rem);
+            display: flex;
+            flex-direction: column;
+            .items-center-wrap {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+            }
+            .items-center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow: 1;
+            }
+        }
+    }
+}
+
+a {
+    color: $colorPrimaryDark;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    transition: color 0.3s;
+    &:hover, &:active {
+        color: $colorPrimary;
+        text-decoration: none;
+    }
+}
+
+.icon-button {
+    font-size: 1.1rem;
+    .icon {
+        font-size: 1rem;
+        position: relative;
+        top: 1px;
+        margin-right: 0.3rem;
+    }
+}
+
+button.icon-button {
+    @extend .icon-button;
+    color: $colorPrimaryDark;
+    margin: 0;
+    transition: color 0.3s;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    &:hover {
+        color: $colorPrimary;
+    }
+}
+
+img.icon-image {
+
+    $iconWidth: 60px;
+    min-width: $iconWidth;
+    width: $iconWidth;
+    max-width: $iconWidth;
+    border-radius: 1rem;
+    box-shadow: 2px 2px 5px $colorSecondaryDark;
+
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+
+
+@media (min-width: 576px) {
+
+    .content-container {
+        padding: 0 3rem;
+        .content {
+            margin: 3rem 0rem;
+            padding: 2rem 3rem;
+            min-height: calc(100vh - 6rem);
+            > div {
+                min-height: calc(100vh - 10rem);
+            }
+        }
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    img.icon-image {
+        min-width: 0;
+        width: 100%;
+        max-width: calc(100% - 2.4rem);
+    }
+
+}
+
+// IE
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+
+    body {
+        @include parallax-background($backgroundImage);
+    }
+
+    .parallax-background {
+        display: none;
+    }
+
+    .content-container {
+        .content {
+            > div {
+                .items-center {
+                    min-height: 63vh;
+                }
+            }
+        }
+    }
+
+}

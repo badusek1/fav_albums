@@ -1,0 +1,53 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+form.search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-bottom: 0rem;
+    input {
+        border: none;
+        outline: none;
+        padding: 0.5rem 1rem;
+        border-radius: 1.5rem;
+        background-color: rgba($colorPrimary, 0.7);
+        width: 100%;
+        color: $colorSecondary;
+        @include placeholder($colorSecondary);
+        &:active, &:focus {
+            background-color: $colorPrimary;
+        }
+    }
+    button {
+        border: none;
+        outline: none;
+        padding: 0.5rem;
+        margin: 0.5rem 0.5rem 0.5rem 0;
+        font-size: 1.1rem;
+        background-color: transparent;
+        transition: color 0.3s;
+        color: $colorPrimaryDark;
+        white-space: nowrap;
+        &:hover {
+            color: $colorPrimary;
+        }
+        .icon {
+            top: 0;
+        }
+    }
+}
+
+@media (min-width: 576px) {
+    
+    form.search-form {
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 2rem;
+        button {
+            margin: 0rem 0.5rem;
+        }
+    }
+
+}

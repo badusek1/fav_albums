@@ -1,0 +1,44 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+a.artist {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    @include linedItem;
+    padding: 0.6rem 0;
+    p {
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 60px - 1rem);
+    }
+    img.icon-image {
+        margin: 0 1rem 0 0;
+        transition: transform 0.3s;
+    }
+    &:hover {
+        img.icon-image {
+            transform: scale(0.92);
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    a.artist {
+        display: block;
+        text-align: center;
+        padding: 0;
+        border: none;
+        img.icon-image {  
+            margin: 0 0 0.5rem 0;
+        }
+        p {
+            margin-bottom: 1.5rem;
+            max-width: 100%;
+        }
+    }
+
+}

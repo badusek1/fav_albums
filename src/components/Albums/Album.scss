@@ -1,0 +1,66 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.album {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 0;
+    @include linedItem;
+    .icon-image {
+        display: none;
+        align-self: flex-start;
+    }
+    .album-info {
+        width: 100%;
+        text-align: left;
+        p {
+            margin: 0 1.2rem 0 0;
+        }
+        .album-name {
+            font-size: 1.1rem;
+        }
+        .additional-info {
+            color: $colorPrimaryDark;
+        }
+    }
+    .icon-button {
+        font-size: 1.5rem;
+        padding: 0.6rem;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .album {
+        .icon-image {
+            display: block;
+        }
+        .album-info {
+            p {
+                margin: 0 1.2rem 0 1rem;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+
+    .album {
+        .icon-image {
+            $iconWidth: 70px;
+            min-width: $iconWidth;
+            width: $iconWidth;
+            max-width: $iconWidth;
+        }
+        .album-info {
+            p {
+                margin: 0 1.2rem;
+            }
+            .album-name {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+}
