@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import appleAxios from '../axios/appleAxios';
+import axios from 'axios';
+
 import { addFavouriteAlbum } from '../redux/actions/albumsActions';
 
 function AlbumsPage(props) {
@@ -24,12 +26,16 @@ function AlbumsPage(props) {
     const [requestOK, setRequestOK] = useState(true);
 
 
-    const loadAlbumsData = (artistID) => {
+    const loadAlbumsData = (source, artistID) => {
+
+        let requestCancelled = false;
+
         appleAxios.get('/lookup', {
             params: {
                 id: artistID,
                 entity: 'album'
-            }
+            },
+            cancelToken: source.token
         })
         .then((response) => {
 
@@ -42,17 +48,32 @@ function AlbumsPage(props) {
             setRequestOK(true);
 
         })
-        .catch(() => {
-            setRequestOK(false);
+        .catch((error) => {
+            if (axios.isCancel(error)) {
+                requestCancelled = true;
+            } else {
+                setRequestOK(false);
+            }
         })
         .then(() => {
-            setRequestFinished(true);
+            if (!requestCancelled) {
+                setRequestFinished(true);
+            }
         });
+
     }
 
 
     useEffect(() => {
-        loadAlbumsData(artistID);
+
+        const source = axios.CancelToken.source();
+
+        loadAlbumsData(source, artistID);
+
+        return () => {
+            source.cancel();
+        }
+
     }, [artistID]);
 
 

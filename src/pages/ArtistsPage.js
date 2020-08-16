@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import Navigation from '../components/Navigation/Navigation';
@@ -8,12 +8,24 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { searchArtists } from '../redux/actions/artistsActions';
+import { searchArtists, finishSearchingRequest } from '../redux/actions/artistsActions';
 
+import axios from 'axios';
 import Search from '../components/Search/Search';
 import ArtistsList from '../components/Artists/ArtistsList';
 
 function ArtistsPage(props) {
+
+    const source = axios.CancelToken.source();
+
+    useEffect(() => {
+        finishSearchingRequest();
+        return () => {
+            source.cancel();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
 
     return (
         <div>
@@ -22,7 +34,7 @@ function ArtistsPage(props) {
                     <FontAwesomeIcon icon={faAngleLeft} className="icon" />späť
                 </Link>
             </Navigation>
-            <Search onSearch={props.onSearchArtists}  placeholder="Hľadať interprétov..." value={props.searchTerm} />
+            <Search onSearch={props.searchArtists}  placeholder="Hľadať interprétov..." value={props.searchTerm} source={source} />
             <ArtistsList requestFinished={props.requestFinished} requestOK={props.requestOK} searchedArtists={props.searchedArtists} />
         </div>
     );
@@ -43,7 +55,8 @@ const mapStateToProps = createSelector(
 )
 
 const mapDispatchToProps = {
-    onSearchArtists: searchArtists
+    searchArtists: searchArtists,
+    finishSearchingRequest: finishSearchingRequest
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArtistsPage);

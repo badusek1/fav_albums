@@ -6,12 +6,12 @@ import { createSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 
 import appleAxios from '../axios/appleAxios';
+import axios from 'axios';
 
 import Navigation from '../components/Navigation/Navigation';
 import AlbumsList, { FAVOURITE_ALBUMS } from '../components/Albums/AlbumsList';
 
 import { clearSearchedArtists } from '../redux/actions/artistsActions';
-
 
 function HomePage(props) {
 
@@ -19,16 +19,20 @@ function HomePage(props) {
     const [requestFinished, setRequestFinished] = useState(false);
     const [requestOK, setRequestOK] = useState(true);
 
-    const fetchFavouriteAlbums = (favouriteAlbums) => {
+
+    const fetchFavouriteAlbums = (source, favouriteAlbums) => {
 
         const albumIDs = favouriteAlbums.join(',');
+
+        let requestCancelled = false;
 
         if (albumIDs !== '') {
             
             appleAxios.get('/lookup', {
                 params: {
                     id: albumIDs
-                }
+                },
+                cancelToken: source.token
             })
             .then((response) => {
 
@@ -38,11 +42,19 @@ function HomePage(props) {
             })
             .catch((error) => {
 
-                setRequestOK(false);
+                if (axios.isCancel(error)) {
+                    requestCancelled = true;
+                } else {
+                    setRequestOK(false);
+                }
 
             })
             .then(() => {
-                setRequestFinished(true);
+
+                if (!requestCancelled) {
+                    setRequestFinished(true);
+                }
+
             });
 
         } else {
@@ -52,12 +64,24 @@ function HomePage(props) {
 
     }
 
+
+
     const { clearSearchedArtists } = props;
 
     useEffect(() => {
+
+        const source = axios.CancelToken.source();
+
         clearSearchedArtists();
-        fetchFavouriteAlbums(props.favouriteAlbums)
+        fetchFavouriteAlbums(source, props.favouriteAlbums);
+
+        return () => {
+            source.cancel();
+        }
+
     }, [props.favouriteAlbums, clearSearchedArtists]);
+
+
 
 
     return (
