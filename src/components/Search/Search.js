@@ -15,7 +15,7 @@ function Search(props) {
 
     const search = (event) => {
         event.preventDefault();
-        props.onSearch(props.source, searchTerm);
+        props.onSearch(searchTerm);
     }
 
     return (

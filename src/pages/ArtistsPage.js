@@ -18,6 +18,10 @@ function ArtistsPage(props) {
 
     const source = axios.CancelToken.source();
 
+    const searchArtists = (searchTerm) => {
+        props.searchArtists(source, searchTerm);
+    }
+
     useEffect(() => {
         finishSearchingRequest();
         return () => {
@@ -34,7 +38,7 @@ function ArtistsPage(props) {
                     <FontAwesomeIcon icon={faAngleLeft} className="icon" />späť
                 </Link>
             </Navigation>
-            <Search onSearch={props.searchArtists}  placeholder="Hľadať interprétov..." value={props.searchTerm} source={source} />
+            <Search onSearch={searchArtists}  placeholder="Hľadať interprétov..." value={props.searchTerm} />
             <ArtistsList requestFinished={props.requestFinished} requestOK={props.requestOK} searchedArtists={props.searchedArtists} />
         </div>
     );
